@@ -1,0 +1,26 @@
+{
+  "name": "mirrorme",
+  "version": "1.0.0",
+  "description": "Gamedev.js Jam 2021 #gamedevjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DropMania/Gamedev.js-Jam-2021.git"
+  },
+  "author": "Robin Hallerbach",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DropMania/Gamedev.js-Jam-2021/issues"
+  },
+  "homepage": "https://github.com/DropMania/Gamedev.js-Jam-2021#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "socket.io": "^4.0.1"
+  }
+}
