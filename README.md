@@ -21,9 +21,9 @@ Gamedev.js Jam 2021 #gamedevjs
 
 ## Todos:
 
--   [ ] create Vue 3 app with Vite
--   [ ] create nodejs express server
--   [ ] add socket.io to the server
+-   [x] create Vue 3 app with Vite
+-   [x] create nodejs express server
+-   [x] add socket.io to the server
 -   [ ] create game with id
 -   [ ] everybody can join the game via url
 -   [ ] game connection stores in localStorage
