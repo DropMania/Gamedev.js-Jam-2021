@@ -12,7 +12,7 @@ Gamedev.js Jam 2021 #gamedevjs
 
 ## Idea:
 
--   name: MirrorMe
+-   name: MirrorMates
 -   two or more players
 -   you all have two draw the same word
 -   if all your images compared are over a specific percentage you will live
