@@ -1,9 +1,17 @@
 <template>
-    <div>test</div>
+    <router-view />
 </template>
 
-<script setup>
-import { socket } from './socket'
+<script>
+if (localStorage.getItem('runningGames') == null) {
+    localStorage.setItem('runningGames', '[]')
+}
+
+let runningGames = JSON.parse(localStorage.getItem('runningGames'))
+if (runningGames.length > 5) {
+    runningGames.splice(0, runningGames.length - 5)
+    localStorage.setItem('runningGames', JSON.stringify(runningGames))
+}
 </script>
 
 <style>

@@ -12,6 +12,7 @@ Gamedev.js Jam 2021 #gamedevjs
 
 ## Idea:
 
+-   name: MirrorMe
 -   two or more players
 -   you all have two draw the same word
 -   if all your images compared are over a specific percentage you will live
@@ -24,9 +25,9 @@ Gamedev.js Jam 2021 #gamedevjs
 -   [x] create Vue 3 app with Vite
 -   [x] create nodejs express server
 -   [x] add socket.io to the server
--   [ ] create game with id
--   [ ] everybody can join the game via url
--   [ ] game connection stores in localStorage
+-   [x] create game with id
+-   [x] everybody can join the game via url
+-   [x] game connection stores in localStorage
 -   [ ] server picks random word from a wordlist and client shows the word to everybody
 -   [ ] implement draw canvas
 -   [ ] server compares every image and calculates an average percentage of their equality
