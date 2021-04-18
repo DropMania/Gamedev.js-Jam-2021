@@ -22,4 +22,4 @@ app.get('/', (req, res) => {
     res.send('testo')
 })
 
-httpServer.listen(5000)
+httpServer.listen(process.env.PORT || 5000)
