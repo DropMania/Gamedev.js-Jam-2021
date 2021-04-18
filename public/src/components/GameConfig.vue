@@ -94,4 +94,6 @@ function copyLink() {
 }
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+@import url(../main.scss);
+</style>

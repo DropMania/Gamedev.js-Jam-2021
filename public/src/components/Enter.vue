@@ -1,7 +1,13 @@
 <template>
-    <div>
-        <p>Enter your Name:</p>
-        <input type="text" v-model="name" @keyup="nameBoxEnter" />
+    <div class="enter">
+        <div class="sub-title">ENTER YOUR NAME:</div>
+        <div class="spacer2" />
+        <input
+            type="text"
+            v-model="name"
+            @keyup="nameBoxEnter"
+            placeholder="NAME..."
+        />
     </div>
 </template>
 
@@ -70,4 +76,13 @@ function enterGame() {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+@import '../main.scss';
+.enter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+</style>

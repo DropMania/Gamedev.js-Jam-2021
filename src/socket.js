@@ -2,15 +2,12 @@ const socketIO = require('socket.io')
 const shortid = require('shortid')
 const { ssim } = require('ssim.js')
 const loadImage = require('./loadImage')
+const wordList = require('./wordList')
 
 const games = {}
 const images = {}
 let gameCount = 0
 function init(server) {
-    compareImages(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHfSURBVHhe7dchksJAEEDRSCQSyVGQHAGJ5BYoiiMgsdyAoyHZrp2pJLtLpfIXYjr/uUxi5ldnCM1ToxkLMBZgLMBYgLEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWICxAGMBxgKMBRgLMBZgLMBYgLEAYwHGAowFvBvrdrudTqd6kd27saJU08xlPIf2OaupGWMo1qymZgxbAMYCjAUYCzAWMFWs+/2+2Wyu12u9TmGqWKvVKj47FotFvU5hkliXyyVKFXUphUk2U8Yq7Ha7upTC52PFaVVKhcfjUVdT+HysdqxCXcri8/upnZrmcDjUpSw+HOt4PNZUGf+Bd1t6/8uo/yOY7Ggvuljtl9H/ekXr5XJZSm2322RHe9HFikxlq2G9XseY1BsjRN+2VEhZKnSxzudz3WtPVBsetLgbz9Snv+U711s/juGXvVr9cPHS/WpUJC4VfsQq4iXa7/d196PFiZ717Wu9iNUaHrTWHDIVQ7H6XobL/dL9NTaWgrEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWICxAGMBxgKMBRgLMBZgLMBYgLEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWICxRns+vwChMlTbXIsfgAAAAABJRU5ErkJggg==',
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIbSURBVHhe7doxjhoxGEBhkoqSku04CnRwA0pKzgAFHRwBOmg5AVyGnhtAR/7E1gglq9W8AUXyzvsaxjM0frI90i4/Ho9HR/X8zJ+qwViAsQBjAcYCjAUYCzAWYCzAWICxAGMBxgKMBRgLMBZgLMBYgLEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWMB3jnU8HtfrdR68w3eOdblclstlHrxDqT/AjVUTLRaLRR7/F6WurLevmjr8aTfg2xAwFmAswFhAG2Odz+fRaHQ4HPK4tja+DT8+Pq7Xa7fbvd1u+VY9rVtZu90uSsXF/X5Pd4BYWa3S7/fTxKfTab5VW7u2YZxWk8kkXccejJ2YrmtqV6x0WqXrBhNv15lVlZrP5+mC+b0X22G1WuU5N511GbFOp9NwONzv93nMbbfb3KnR0Z6UESu9wuI8btYrWvd6vVRqPB7H0Z4fQGXEen5tDQaDWCb5QQ3RtyoVGpcKZcTabDZ5rk+i2tcLLZ7Gd/K3/4hzPT9rpIxY4dNeledwsen+apS8WCoUEyuJTTSbzfLsa4sT/ZXdVyksVuXrhVZ5V6ak1FjPPg33+qb7l/+wAPxLKWAswFiAsQBjAcYCjAUYCzAWYCzAWICxAGMBxgKMBRgLMBZgLMBYgLEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWICxAGMBxgKMVVun8wuqMc6KM9cUbAAAAABJRU5ErkJggg=='
-    ).then((ssim) => console.log(ssim))
     const io = socketIO(server, {
         cors: {
             origin: 'http://localhost:3000',
@@ -19,7 +16,7 @@ function init(server) {
     })
 
     io.on('connection', (socket) => {
-        socket.on('createGame', (data, akn, time = 90) => {
+        socket.on('createGame', (data, akn, time = 10) => {
             let gameId = shortid.generate()
             games[gameId] = {
                 players: [],
@@ -28,7 +25,10 @@ function init(server) {
                 minPlayers: 2,
                 state: 'NONE',
                 timeLeft: time,
-                defaultTime: time
+                defaultTime: time,
+                currentWord: '',
+                lifes: 3,
+                currentCompare: 0
             }
             images[gameId] = []
             akn({ success: true, gameId })
@@ -47,7 +47,7 @@ function init(server) {
                         id: data.id,
                         name: data.name,
                         host: data.host,
-                        active: true
+                        sort: games[data.gameId].players.length
                     }
                     games[data.gameId].players.push(player)
                     akn(player)
@@ -87,12 +87,52 @@ function init(server) {
                 setDisplayState(gameId, games[gameId], io)
             }
         })
+
+        socket.on('done_drawing', async ({ gameId, playerId, image }) => {
+            if (images.hasOwnProperty(gameId)) {
+                images[gameId].push([playerId, image])
+                if (games[gameId].players.length == images[gameId].length) {
+                    io.to(gameId).emit('image_updated', images[gameId])
+                    games[gameId].currentCompare = await compareImages(
+                        images[gameId][0][1],
+                        images[gameId][1][1]
+                    )
+                    callUpdate(io, gameId)
+                }
+            }
+        })
     })
 }
 
 async function setDisplayState(gameId, game, io) {
     game.state = 'DISPLAY'
+    let word = pickRandom(wordList)
+    game.currentWord = word
     callUpdate(io, gameId)
+    await sleep(3000)
+    setDrawState(gameId, game, io)
+}
+
+async function setDrawState(gameId, game, io) {
+    images[gameId] = []
+    game.state = 'DRAW'
+    callUpdate(io, gameId)
+    let timer = setInterval((_) => {
+        game.timeLeft--
+        io.to(gameId).emit('timer_updated', game.timeLeft)
+        if (game.timeLeft == 0) {
+            clearInterval(timer)
+            game.timeLeft = game.defaultTime
+            setCompareState(gameId, game, io)
+        }
+    }, 1000)
+}
+
+async function setCompareState(gameId, game, io) {
+    game.state = 'COMPARE'
+    callUpdate(io, gameId)
+    await sleep(3000)
+    setDisplayState(gameId, game, io)
 }
 
 function callUpdate(io, gameId) {
@@ -105,10 +145,19 @@ function compareImages(img1, img2) {
             loadImage(Buffer.from(img1.split(',')[1], 'base64')),
             loadImage(Buffer.from(img2.split(',')[1], 'base64'))
         ]).then(([img1, img2]) => {
+            console.log(img1.data.toString(), img2.data.toString())
             let { mssim } = ssim(img1, img2)
             resolve(Math.ceil(mssim * 100))
         })
     })
+}
+
+function pickRandom(array) {
+    return array[Math.floor(Math.random() * array.length)]
+}
+
+function sleep(time) {
+    return new Promise((res) => setTimeout(res, time))
 }
 module.exports = {
     init

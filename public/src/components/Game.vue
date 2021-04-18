@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="game">
         <div class="playerSection">
             {{ stores.game.players.length }} / {{ stores.game.maxPlayers }}
             <div
@@ -21,6 +21,15 @@
             <div v-if="stores.game.state == 'NONE'">
                 <GameConfig />
             </div>
+            <div v-if="stores.game.state == 'DISPLAY'">
+                <Display />
+            </div>
+            <div v-if="stores.game.state == 'DRAW'">
+                <Draw />
+            </div>
+            <div v-if="stores.game.state == 'COMPARE'">
+                <Compare />
+            </div>
         </div>
     </div>
 </template>
@@ -32,6 +41,9 @@ import { onMounted } from 'vue'
 import router from '../router'
 import stores from '../stores'
 import GameConfig from './GameConfig.vue'
+import Display from './states/Display.vue'
+import Draw from './states/Draw.vue'
+import Compare from './states/Compare.vue'
 let route = useRoute()
 
 onMounted(() => {
@@ -71,4 +83,15 @@ socket.on('timer_updated', (timeLeft) => {
 })
 </script>
 
-<style></style>
+<style lang="scss">
+@import '../main.scss';
+.game {
+    height: 98%;
+    width: 71.8%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background: url(../assets/img/game-bg.png);
+    background-size: cover;
+}
+</style>

@@ -1,0 +1,13 @@
+@font-face {
+    font-family: Pixies;
+    src: url(./assets/font/Gamepixies-8MO6n.ttf);
+}
+@font-face {
+    font-family: PixTitle;
+    src: url(./assets/font/PixelEmulator-xq08.ttf);
+}
+
+$font-primary: Pixies;
+$font-title: PixTitle;
+
+$bg-primary: #3309a0;

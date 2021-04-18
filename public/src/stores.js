@@ -7,12 +7,16 @@ export default reactive({
         minPlayers: 0,
         started: false,
         state: 'NONE',
-        timeLeft: 0
+        timeLeft: 0,
+        currentWord: '',
+        lifes: 3,
+        currentCompare: ''
     },
     images: [],
     player: {
         id: '',
         name: '',
-        host: false
+        host: false,
+        sort: 0
     }
 })
