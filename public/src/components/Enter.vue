@@ -37,6 +37,7 @@ runningGames.forEach((game) => {
 
 function nameBoxEnter(e) {
     if (e.key == 'Enter') {
+        console.log('test')
         enterGame()
     }
 }

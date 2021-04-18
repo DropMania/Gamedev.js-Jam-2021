@@ -87,7 +87,7 @@ socket.on('timer_updated', (timeLeft) => {
 @import '../main.scss';
 .game {
     height: 98%;
-    width: 71.8%;
+    width: 83.8%;
     display: flex;
     justify-content: center;
     align-content: center;

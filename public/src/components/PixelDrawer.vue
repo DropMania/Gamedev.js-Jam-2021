@@ -1,14 +1,16 @@
 <template>
-    <div class="cnvs">
-        <canvas id="game" width="32" height="32" ref="cnvs"> </canvas>
-        <div class="colors">
-            <div
-                class="color"
-                v-for="color in colors"
-                :key="color"
-                @click="setColor(color)"
-                :style="{ backgroundColor: `rgb(${color})` }"
-            ></div>
+    <div class="frame">
+        <div class="cnvs">
+            <canvas id="game" width="32" height="32" ref="cnvs"> </canvas>
+            <div class="colors">
+                <div
+                    class="color"
+                    v-for="color in colors"
+                    :key="color"
+                    @click="setColor(color)"
+                    :style="{ backgroundColor: `rgb(${color})` }"
+                ></div>
+            </div>
         </div>
     </div>
 </template>
@@ -145,42 +147,55 @@ export default {
 
 <style lang="scss" scoped>
 @import '../main.scss';
+.frame {
+    width: 647px;
+    height: 708px;
+    background: url('/src/assets/img/frame.png');
+    background-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.cnvs {
-    width: 512px;
-    height: 560px;
-    border: solid black 16px;
+    .cnvs {
+        width: 512px;
+        height: 560px;
+        border: solid black 16px;
 
-    canvas {
-        cursor: crosshair;
-        background-image: repeating-linear-gradient(
-                #ccc 0 1px,
-                transparent 1px 100%
-            ),
-            repeating-linear-gradient(90deg, #ccc 0 1px, transparent 1px 100%);
-        background-size: 16px 16px;
-
-        width: 100%;
-        height: 512px;
-        image-rendering: -moz-crisp-edges;
-        image-rendering: -webkit-crisp-edges;
-        image-rendering: pixelated;
-        image-rendering: crisp-edges;
-    }
-    .colors {
-        display: flex;
-        border-top: solid black 16px;
-        width: 100%;
-        height: 32px;
-        margin-top: -4px;
-        .color {
-            height: 100%;
-            flex: 1;
-            cursor: pointer;
-            &:hover {
-                filter: brightness(0.9);
-                &:active {
-                    filter: brightness(0.8);
+        canvas {
+            cursor: crosshair;
+            background-image: repeating-linear-gradient(
+                    #ccc 0 1px,
+                    transparent 1px 100%
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    #ccc 0 1px,
+                    transparent 1px 100%
+                );
+            background-size: 16px 16px;
+            background-color: rgba(#fff, 0.9);
+            width: 100%;
+            height: 512px;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        .colors {
+            display: flex;
+            border-top: solid black 16px;
+            width: 100%;
+            height: 32px;
+            margin-top: -4px;
+            .color {
+                height: 100%;
+                flex: 1;
+                cursor: pointer;
+                &:hover {
+                    filter: brightness(0.9);
+                    &:active {
+                        filter: brightness(0.8);
+                    }
                 }
             }
         }

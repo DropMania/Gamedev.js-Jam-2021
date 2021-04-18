@@ -3,6 +3,15 @@
 </template>
 
 <script>
+/* const ostEl = document.createElement('audio')
+ostEl.src = '/src/assets/sounds/ost.mp3'
+
+ostEl.loop = true
+document.body.appendChild(ostEl)
+document.body.addEventListener('click', () => {
+    ostEl.play()
+}) */
+
 if (localStorage.getItem('runningGames') == null) {
     localStorage.setItem('runningGames', '[]')
 }
@@ -36,7 +45,7 @@ html {
     justify-content: center;
 }
 body {
-    background: url(./assets/img/bg.png);
+    background: url(./assets/img/bg-2.png);
     background-size: cover;
     width: 100%;
     height: 100%;
