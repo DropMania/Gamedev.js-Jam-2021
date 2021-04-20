@@ -1,23 +1,16 @@
 <template>
     <div class="game">
-        <div class="playerSection">
-            {{ stores.game.players.length }} / {{ stores.game.maxPlayers }}
-            <div
-                v-for="p in stores.game.players"
-                :key="p.id"
-                class="playerDisplay"
-            >
-                <div v-if="p.id == stores.player.id" class="playerMe">
-                    {{ p.name }}
-                    <span class="emoji" v-if="p.host">👑</span>
-                </div>
-                <div v-else class="playerOther">
-                    {{ p.name }}
-                    <span class="emoji" v-if="p.host">👑</span>
-                </div>
+        <div class="topSection">
+            <div class="lifes">
+                <img
+                    src="/src/assets/img/heart.png"
+                    v-for="i in stores.game.lifes"
+                    :key="i"
+                />
             </div>
+            <TimeBar class="timer" />
         </div>
-        <div class="gameSection">
+        <div class="gameSection" v-for="i in 1" :key="i">
             <div v-if="stores.game.state == 'NONE'">
                 <GameConfig />
             </div>
@@ -44,6 +37,7 @@ import GameConfig from './GameConfig.vue'
 import Display from './states/Display.vue'
 import Draw from './states/Draw.vue'
 import Compare from './states/Compare.vue'
+import TimeBar from './TimeBar.vue'
 let route = useRoute()
 
 onMounted(() => {
@@ -93,5 +87,31 @@ socket.on('timer_updated', (timeLeft) => {
     align-content: center;
     background: url(../assets/img/game-bg.png);
     background-size: cover;
+    flex-direction: column;
+    .topSection {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 10%;
+        .lifes {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            img {
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+    }
+    .gameSection {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        height: 80%;
+    }
 }
 </style>

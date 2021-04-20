@@ -5,8 +5,8 @@
         <div class="spacer6"></div>
         <img src="../assets/mirror_man/Sprite-0003.gif" />
         <button @click="createGame()">Create Game</button>
-        <PixelDrawer ref="drawer" />
-        <button @click="img">log</button>
+        <!-- <PixelDrawer ref="drawer" />
+        <button @click="img">log</button> -->
         <div class="spacer6"></div>
         <div class="footer">
             <a
@@ -23,13 +23,13 @@ import { socket } from '../socket'
 import router from '../router'
 import PixelDrawer from './PixelDrawer.vue'
 import { onMounted, watch, ref } from 'vue'
-let drawer = ref(null)
+/* let drawer = ref(null)
 onMounted(() => {
     drawer.value.setColor('255,0,0')
 })
 function img() {
     drawer.value.undo()
-}
+} */
 
 function createGame() {
     socket.emit(

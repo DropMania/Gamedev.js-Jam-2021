@@ -1,7 +1,8 @@
 <template>
     <div>
-        {{ stores.game.timeLeft }}
+        <div class="med-title">{{ stores.game.currentWord }}</div>
         <PixelDrawer ref="drawer" />
+        <div class="spacer1" />
     </div>
 </template>
 

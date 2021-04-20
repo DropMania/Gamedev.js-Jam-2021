@@ -65,6 +65,7 @@ button {
         filter: brightness(0.9);
         &:active {
             border: solid black 3px;
+            margin: 2px;
         }
     }
 }
@@ -73,12 +74,18 @@ button {
     font-family: $font-title;
     font-size: 5rem;
 }
+.med-title {
+    font-family: $font-title;
+    font-size: 3rem;
+}
 .sub-title {
     font-family: $font-primary;
     font-size: 2rem;
 }
 
-input[type='text'] {
+input,
+textarea,
+select {
     background: $bg-primary;
     outline: none;
     border: solid black 5px;

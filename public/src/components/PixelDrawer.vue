@@ -17,18 +17,10 @@
 
 <script>
 import { onMounted, watch, ref } from 'vue'
+import { DB32, NES, EDG16 } from '../colorMaps'
 export default {
     setup() {
-        let colors = [
-            '0,0,0',
-            '255,0,0',
-            '0,255,0',
-            '0,0,255',
-            '255,255,0',
-            '255,0,255',
-            '0,255,255',
-            '255,255,255'
-        ]
+        let colors = EDG16
         let cnvs = ref(null)
         let ctx
         let mouseDown = false

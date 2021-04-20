@@ -16,7 +16,7 @@
                 {{ stores.game.defaultTime == time[1] ? time[0] : '' }}
             </span>
         </div>
-        <div class="config-item">
+        <!--  <div class="config-item">
             Max Players:
             <input
                 type="number"
@@ -29,14 +29,15 @@
             <span v-else>
                 {{ stores.game.maxPlayers }}
             </span>
-        </div>
+        </div> -->
         <textarea ref="linkURL" v-model="link" class="copytext"> </textarea>
+
         <button
-            v-if="stores.player.host && !stores.game.started"
+            v-if="!stores.game.started"
             @click="copyLink()"
             class="config-item"
         >
-            <span class="emoji">📎</span> Copy link!
+            Copy link!
         </button>
         <button
             v-if="stores.player.host && !stores.game.started"
@@ -91,9 +92,19 @@ function copyLink() {
     linkURL.value.select()
     linkURL.value.setSelectionRange(0, 99999)
     document.execCommand('copy')
+    linkURL.value.blur()
 }
 </script>
 
 <style lang="scss">
 @import '../main.scss';
+.config {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.copytext {
+    position: absolute;
+    top: -90000px;
+}
 </style>

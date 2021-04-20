@@ -1,5 +1,9 @@
 <template>
-    <div>{{ stores.game.currentWord }}</div>
+    <div>
+        The Word you need to draw is:<br />
+        <div class="big-title">{{ stores.game.currentWord }}</div>
+        <div class="spacer6" />
+    </div>
 </template>
 
 <script setup>
