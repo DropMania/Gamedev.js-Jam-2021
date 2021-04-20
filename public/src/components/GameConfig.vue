@@ -16,31 +16,26 @@
                 {{ stores.game.defaultTime == time[1] ? time[0] : '' }}
             </span>
         </div>
-        <!--  <div class="config-item">
-            Max Players:
+        <div class="config-item">
+            Lifes:
             <input
                 type="number"
                 v-if="stores.player.host"
-                :value="stores.game.maxPlayers"
-                @input="setMaxPlayers"
-                min="2"
+                :value="stores.game.lifes"
+                @input="setLifes"
+                min="1"
+                max="10"
                 @keydown="typeNumber"
             />
             <span v-else>
-                {{ stores.game.maxPlayers }}
+                {{ stores.game.lifes }}
             </span>
-        </div> -->
+        </div>
         <textarea ref="linkURL" v-model="link" class="copytext"> </textarea>
 
+        <button @click="copyLink()" class="config-item">Copy link!</button>
         <button
-            v-if="!stores.game.started"
-            @click="copyLink()"
-            class="config-item"
-        >
-            Copy link!
-        </button>
-        <button
-            v-if="stores.player.host && !stores.game.started"
+            v-if="stores.player.host"
             :disabled="stores.game.players.length < stores.game.minPlayers"
             @click="startGame()"
             class="config-item"
@@ -76,9 +71,9 @@ function selectTime(e) {
         timeLeft: e.target.value
     })
 }
-function setMaxPlayers(e) {
+function setLifes(e) {
     socket.emit('set_config', route.params.id, {
-        maxPlayers: e.target.value
+        lifes: e.target.value
     })
 }
 function typeNumber(e) {
@@ -102,6 +97,12 @@ function copyLink() {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .config-item {
+        width: 20rem;
+    }
 }
 .copytext {
     position: absolute;

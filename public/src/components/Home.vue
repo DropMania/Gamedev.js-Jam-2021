@@ -32,18 +32,12 @@ function img() {
 } */
 
 function createGame() {
-    socket.emit(
-        'createGame',
-        {
-            maxPlayers: 2
-        },
-        (data) => {
-            router.push({
-                name: `Enter`,
-                params: { host: true, id: data.gameId }
-            })
-        }
-    )
+    socket.emit('createGame', {}, (data) => {
+        router.push({
+            name: `Enter`,
+            params: { host: true, id: data.gameId }
+        })
+    })
 }
 </script>
 

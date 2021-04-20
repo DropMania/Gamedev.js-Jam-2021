@@ -1,6 +1,6 @@
 <template>
     <div class="frame">
-        <div class="cnvs">
+        <div class="cnvs" v-show="props.mine">
             <canvas id="game" width="32" height="32" ref="cnvs"> </canvas>
             <div class="colors">
                 <div
@@ -12,6 +12,9 @@
                 ></div>
             </div>
         </div>
+        <div class="others" v-show="!props.mine">
+            {{ props.player.name }} is drawing...
+        </div>
     </div>
 </template>
 
@@ -19,7 +22,12 @@
 import { onMounted, watch, ref } from 'vue'
 import { DB32, NES, EDG16 } from '../colorMaps'
 export default {
-    setup() {
+    props: {
+        mine: Boolean,
+        player: Object
+    },
+    setup(props) {
+        console.log(props)
         let colors = EDG16
         let cnvs = ref(null)
         let ctx
@@ -131,7 +139,8 @@ export default {
             getBase64,
             setColor,
             undo,
-            colors
+            colors,
+            props
         }
     }
 }
@@ -139,11 +148,25 @@ export default {
 
 <style lang="scss" scoped>
 @import '../main.scss';
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 .frame {
     width: 647px;
     height: 708px;
     background: url('/src/assets/img/frame.png');
-    background-size: 100%;
+    background-size: 647px;
+    background-repeat: no-repeat;
+    background-position-x: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -191,6 +214,9 @@ export default {
                 }
             }
         }
+    }
+    .others {
+        animation: blink 2s infinite;
     }
 }
 </style>

@@ -16,19 +16,21 @@ function init(server) {
     })
 
     io.on('connection', (socket) => {
-        socket.on('createGame', (data, akn, time = 10) => {
+        socket.on('createGame', (data, akn) => {
             let gameId = shortid.generate()
             games[gameId] = {
                 players: [],
                 started: false,
-                maxPlayers: data.maxPlayers,
+                maxPlayers: 3,
                 minPlayers: 2,
                 state: 'NONE',
-                timeLeft: time,
-                defaultTime: time,
+                timeLeft: 30,
+                defaultTime: 30,
                 currentWord: '',
                 lifes: 3,
-                currentCompare: 0
+                currentCompare: 0,
+                threshold: 20,
+                score: 0
             }
             images[gameId] = []
             akn({ success: true, gameId })
@@ -93,10 +95,19 @@ function init(server) {
                 images[gameId].push([playerId, image])
                 if (games[gameId].players.length == images[gameId].length) {
                     io.to(gameId).emit('image_updated', images[gameId])
-                    games[gameId].currentCompare = await compareImages(
+                    let result = await compareImages(
                         images[gameId][0][1],
                         images[gameId][1][1]
                     )
+                    games[gameId].currentCompare = result
+                    if (result < games[gameId].threshold) {
+                        games[gameId].lifes--
+                    } else {
+                        games[gameId].score++
+                    }
+                    if (games[gameId].lifes == 0) {
+                        games[gameId].state = 'LOST'
+                    }
                     callUpdate(io, gameId)
                 }
             }
@@ -131,8 +142,14 @@ async function setDrawState(gameId, game, io) {
 async function setCompareState(gameId, game, io) {
     game.state = 'COMPARE'
     callUpdate(io, gameId)
-    await sleep(3000)
-    setDisplayState(gameId, game, io)
+    await sleep(10000)
+    if (game.state != 'LOST') {
+        setDisplayState(gameId, game, io)
+    } else {
+        game.state = 'NONE'
+        game.lifes = 3
+        callUpdate(io, gameId)
+    }
 }
 
 function callUpdate(io, gameId) {
@@ -145,7 +162,6 @@ function compareImages(img1, img2) {
             loadImage(Buffer.from(img1.split(',')[1], 'base64')),
             loadImage(Buffer.from(img2.split(',')[1], 'base64'))
         ]).then(([img1, img2]) => {
-            console.log(img1.data.toString(), img2.data.toString())
             let { mssim } = ssim(img1, img2)
             resolve(Math.ceil(mssim * 100))
         })

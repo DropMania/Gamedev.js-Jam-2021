@@ -1,7 +1,21 @@
 <template>
     <div>
         <div class="med-title">{{ stores.game.currentWord }}</div>
-        <PixelDrawer ref="drawer" />
+        <div class="draw">
+            <div
+                class="drawer"
+                v-for="player in stores.game.players"
+                :key="player.id"
+            >
+                <PixelDrawer
+                    ref="drawer"
+                    v-if="stores.player.sort == player.sort"
+                    mine
+                    :player="player"
+                />
+                <PixelDrawer v-else :player="player" />
+            </div>
+        </div>
         <div class="spacer1" />
     </div>
 </template>
@@ -32,5 +46,13 @@ watch(
 </script>
 
 <style lang="scss">
-@import url(../../main.scss);
+@import '../../main.scss';
+.draw {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    div {
+    }
+}
 </style>

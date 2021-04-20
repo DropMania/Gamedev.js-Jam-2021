@@ -4,25 +4,28 @@
             <div class="lifes">
                 <img
                     src="/src/assets/img/heart.png"
-                    v-for="i in stores.game.lifes"
+                    v-for="i in +stores.game.lifes"
                     :key="i"
+                    :alt="i"
                 />
             </div>
             <TimeBar class="timer" />
         </div>
-        <div class="gameSection" v-for="i in 1" :key="i">
-            <div v-if="stores.game.state == 'NONE'">
-                <GameConfig />
-            </div>
+
+        <div class="gameSection">
             <div v-if="stores.game.state == 'DISPLAY'">
                 <Display />
             </div>
-            <div v-if="stores.game.state == 'DRAW'">
-                <Draw />
+            <div v-if="stores.game.state == 'NONE'">
+                <GameConfig />
             </div>
             <div v-if="stores.game.state == 'COMPARE'">
                 <Compare />
             </div>
+            <div v-if="stores.game.state == 'DRAW'">
+                <Draw />
+            </div>
+            <div v-if="stores.game.state == 'LOST'">Verloren :(</div>
         </div>
     </div>
 </template>
@@ -91,7 +94,7 @@ socket.on('timer_updated', (timeLeft) => {
     .topSection {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-end;
         width: 100%;
         height: 10%;
         .lifes {
@@ -111,7 +114,10 @@ socket.on('timer_updated', (timeLeft) => {
         align-items: center;
         text-align: center;
         width: 100%;
-        height: 80%;
+        height: 90%;
+        div {
+            width: 100%;
+        }
     }
 }
 </style>

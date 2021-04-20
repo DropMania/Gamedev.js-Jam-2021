@@ -10,7 +10,9 @@ export default reactive({
         timeLeft: 0,
         currentWord: '',
         lifes: 3,
-        currentCompare: ''
+        currentCompare: '',
+        threshold: 0,
+        score: 0
     },
     images: [],
     player: {
