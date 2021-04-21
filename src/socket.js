@@ -10,7 +10,11 @@ let gameCount = 0
 function init(server) {
     const io = socketIO(server, {
         cors: {
-            origin: 'http://localhost:3000',
+            origins: [
+                'http://localhost:3000',
+                'https://dropmania.itch.io/',
+                'https://v6p9d9t4.ssl.hwcdn.net/'
+            ],
             methods: ['GET', 'POST']
         }
     })
