@@ -31,7 +31,7 @@ Gamedev.js Jam 2021 #gamedevjs
 -   [x] server picks random word from a wordlist and client shows the word to everybody
 -   [x] implement draw canvas
 -   [x] server compares every image and calculates an average percentage of their equality
--   [ ] decide if the percentage is high enough
+-   [x] decide if the percentage is high enough
     -   if not they lose a life
     -   if it is they continue and score a point
--   [ ] show score at the end
+-   [x] show score at the end

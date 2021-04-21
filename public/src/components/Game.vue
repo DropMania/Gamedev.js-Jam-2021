@@ -26,7 +26,9 @@
             <div v-if="stores.game.state == 'DRAW'">
                 <Draw />
             </div>
-            <div v-if="stores.game.state == 'LOST'">Verloren :(</div>
+            <div v-if="stores.game.state == 'LOST'">
+                <Lost />
+            </div>
         </div>
     </div>
 </template>
@@ -39,6 +41,7 @@ import router from '../router'
 import stores from '../stores'
 import GameConfig from './GameConfig.vue'
 import Display from './states/Display.vue'
+import Lost from './states/Lost.vue'
 import Draw from './states/Draw.vue'
 import Compare from './states/Compare.vue'
 import TimeBar from './TimeBar.vue'

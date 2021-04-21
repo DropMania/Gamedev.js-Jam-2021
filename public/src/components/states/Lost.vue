@@ -1,7 +1,7 @@
 <template>
     <div>
-        The Word you need to draw is:<br />
-        <div class="big-title">{{ stores.game.currentWord }}</div>
+        You've lost with a score of:<br />
+        <div class="big-title">{{ stores.game.score }}</div>
         <div class="spacer6" />
     </div>
 </template>
