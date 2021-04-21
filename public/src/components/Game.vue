@@ -9,7 +9,7 @@
                     :alt="i"
                 />
             </div>
-            <div class="score">Score: {{ stores.game.score }}</div>
+            <div class="score sub-title">Score: {{ stores.game.score }}</div>
             <TimeBar class="timer" />
         </div>
 

@@ -1,6 +1,19 @@
 <template>
     <div class="config">
         <div class="config-item">
+            Players {{ stores.game.players.length }} /
+            {{ stores.game.maxPlayers }}:
+            <div class="players">
+                <span
+                    class="player"
+                    v-for="player in stores.game.players"
+                    :key="player.id"
+                >
+                    {{ player.name }}
+                </span>
+            </div>
+        </div>
+        <div class="config-item">
             Time:
             <select v-if="stores.player.host" @input="selectTime">
                 <option
@@ -14,6 +27,26 @@
             </select>
             <span v-else v-for="time in timeMapping" :key="time[0]">
                 {{ stores.game.defaultTime == time[1] ? time[0] : '' }}
+            </span>
+        </div>
+        <div class="config-item">
+            Threshold:
+            <select v-if="stores.player.host" @input="selectThreshold">
+                <option
+                    v-for="thresh in threshMapping"
+                    :key="thresh[0]"
+                    :selected="stores.game.threshold == thresh[1]"
+                    :value="thresh[1]"
+                >
+                    {{ thresh[0] }} ({{ thresh[1] }}%)
+                </option>
+            </select>
+            <span v-else v-for="thresh in threshMapping" :key="thresh[0]">
+                {{
+                    stores.game.threshold == thresh[1]
+                        ? `${thresh[0]} (${thresh[1]}%)`
+                        : ''
+                }}
             </span>
         </div>
         <div class="config-item">
@@ -65,10 +98,21 @@ const timeMapping = [
     ['Short', 20],
     ['Super quick', 10]
 ]
+const threshMapping = [
+    ['Easy', 10],
+    ['Normal', 20],
+    ['Hard', 30],
+    ['Insane', 50]
+]
 function selectTime(e) {
     socket.emit('set_config', route.params.id, {
-        defaultTime: e.target.value,
-        timeLeft: e.target.value
+        timeLeft: e.target.value,
+        defaultTime: e.target.value
+    })
+}
+function selectThreshold(e) {
+    socket.emit('set_config', route.params.id, {
+        threshold: e.target.value
     })
 }
 function setLifes(e) {
@@ -102,6 +146,17 @@ function copyLink() {
     justify-content: center;
     .config-item {
         width: 20rem;
+        .players {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .player {
+                padding: 10px;
+                margin: 10px 10px 30px 10px;
+                background-color: $bg-primary;
+                border: solid black 5px;
+            }
+        }
     }
 }
 .copytext {

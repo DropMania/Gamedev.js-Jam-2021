@@ -12,7 +12,8 @@ export default reactive({
         lifes: 3,
         currentCompare: '',
         threshold: 0,
-        score: 0
+        score: 0,
+        type: 'private'
     },
     images: [],
     player: {

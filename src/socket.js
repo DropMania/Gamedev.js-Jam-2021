@@ -21,7 +21,7 @@ function init(server) {
             games[gameId] = {
                 players: [],
                 started: false,
-                maxPlayers: 3,
+                maxPlayers: 2,
                 minPlayers: 2,
                 state: 'NONE',
                 timeLeft: 30,
@@ -30,7 +30,8 @@ function init(server) {
                 lifes: 3,
                 currentCompare: 0,
                 threshold: 20,
-                score: 0
+                score: 0,
+                type: data.type
             }
             images[gameId] = []
             akn({ success: true, gameId })
@@ -71,6 +72,13 @@ function init(server) {
             if (images.hasOwnProperty(data.gameId)) {
                 io.to(data.gameId).emit('image_updated', images[data.gameId])
             }
+        })
+
+        socket.on('request_public_games', (akn) => {
+            let publicGames = Object.entries(games).filter(
+                (g) => g[1].type == 'public'
+            )
+            akn(publicGames)
         })
 
         socket.on('set_config', (gameId, config) => {

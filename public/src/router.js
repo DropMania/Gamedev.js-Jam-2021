@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 import Home from './components/Home.vue'
 import Game from './components/Game.vue'
 import Enter from './components/Enter.vue'
+import Search from './components/Search.vue'
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         path: '/enter/:id',
         name: 'Enter',
         component: Enter
+    },
+    {
+        path: '/search',
+        name: 'Search',
+        component: Search
     }
 ]
 
