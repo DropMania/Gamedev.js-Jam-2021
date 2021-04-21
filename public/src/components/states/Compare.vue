@@ -1,10 +1,12 @@
 <template>
     <div class="compare">
-        {{ stores.game.currentCompare }}%
+        <div class="med-title">{{ stores.game.currentCompare }}%</div>
         <div class="images">
-            <div class="image" v-for="image in rImg" :key="image[0].id">
+            <div class="image" v-for="image in rImg" :key="image[0]">
                 <img :src="image[1]" />
-                {{ image[0].name }}
+                <div>
+                    {{ getName(image[0]) }}
+                </div>
             </div>
         </div>
     </div>
@@ -13,9 +15,17 @@
 <script setup>
 import stores from '../../stores'
 import { onMounted, watch, ref, computed } from 'vue'
+let allPlayers = stores.game.players
 let rImg = computed(() => {
-    return stores.images.reverse()
+    return stores.images.sort(
+        (a, b) =>
+            allPlayers.find((p) => p.id == a[0]).sort -
+            allPlayers.find((p) => p.id == b[0]).sort
+    )
 })
+function getName(playerId) {
+    return allPlayers.find((p) => p.id == playerId).name
+}
 </script>
 
 <style lang="scss">
@@ -26,8 +36,6 @@ let rImg = computed(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
-        overflow: auto;
         .image {
             width: 647px;
             height: 708px;
@@ -38,9 +46,9 @@ let rImg = computed(() => {
             display: flex;
             justify-content: center;
             align-items: center;
-
+            flex-direction: column;
             img {
-                background-color: #d4d4d4;
+                background-color: #fff;
                 width: 512px;
                 height: 512px;
             }

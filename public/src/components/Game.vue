@@ -9,6 +9,7 @@
                     :alt="i"
                 />
             </div>
+            <div class="score">Score: {{ stores.game.score }}</div>
             <TimeBar class="timer" />
         </div>
 
@@ -106,6 +107,9 @@ socket.on('timer_updated', (timeLeft) => {
                 width: 3rem;
                 height: 3rem;
             }
+        }
+        .score {
+            flex: 1;
         }
     }
     .gameSection {

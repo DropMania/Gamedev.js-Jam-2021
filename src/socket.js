@@ -148,6 +148,7 @@ async function setCompareState(gameId, game, io) {
     } else {
         game.state = 'NONE'
         game.lifes = 3
+        game.score = 0
         callUpdate(io, gameId)
     }
 }
