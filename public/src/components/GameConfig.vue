@@ -65,8 +65,11 @@
             </span>
         </div>
         <textarea ref="linkURL" v-model="link" class="copytext"> </textarea>
-
-        <button @click="copyLink()" class="config-item">Copy link!</button>
+        <textarea ref="IDURL" v-model="ID" class="copytext"> </textarea>
+        <div class="config-item copys">
+            <button @click="copyLink()">Copy link!</button>
+            <button @click="copyID()">Copy ID!</button>
+        </div>
         <button
             v-if="stores.player.host"
             :disabled="stores.game.players.length < stores.game.minPlayers"
@@ -91,6 +94,8 @@ import router from '../router'
 import stores from '../stores'
 const route = useRoute()
 const linkURL = ref('')
+const IDURL = ref('')
+let ID = route.params.id
 let link = location.href
 const timeMapping = [
     ['Long', 60],
@@ -133,6 +138,14 @@ function copyLink() {
     document.execCommand('copy')
     linkURL.value.blur()
 }
+
+function copyID() {
+    IDURL.value.focus()
+    IDURL.value.select()
+    IDURL.value.setSelectionRange(0, 99999)
+    document.execCommand('copy')
+    IDURL.value.blur()
+}
 </script>
 
 <style lang="scss">
@@ -157,6 +170,12 @@ function copyLink() {
                 border: solid black 5px;
             }
         }
+    }
+    .copys {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
     }
 }
 .copytext {

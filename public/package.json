@@ -7,6 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "lite-server": "^2.6.1",
     "sass": "^1.32.8",
     "scss": "^0.2.4",
     "shortid": "^2.2.16",
