@@ -82,7 +82,10 @@ function init(server) {
             let publicGames = Object.entries(games).filter(
                 (g) => g[1].type == 'public'
             )
-            akn(publicGames)
+            let availableGames = publicGames.filter((g) => {
+                return g[1].players.length < g[1].maxPlayers
+            })
+            akn(availableGames)
         })
 
         socket.on('set_config', (gameId, config) => {
