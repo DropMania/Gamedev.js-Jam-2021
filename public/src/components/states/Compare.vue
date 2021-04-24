@@ -3,7 +3,11 @@
         <div class="med-title">{{ stores.game.currentCompare }}%</div>
         <div class="images">
             <div class="image" v-for="image in rImg" :key="image[0]">
-                <img :src="image[1]" />
+                <img
+                    class="mirror_line"
+                    src="/src/assets/img/mirror_line.png"
+                />
+                <img class="drawing" :src="image[1]" />
                 <div>
                     {{ getName(image[0]) }}
                 </div>
@@ -36,6 +40,7 @@ function getName(playerId) {
         display: flex;
         justify-content: center;
         align-items: center;
+
         .image {
             width: 647px;
             height: 708px;
@@ -47,7 +52,14 @@ function getName(playerId) {
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            img {
+            .mirror_line {
+                position: absolute;
+                width: 512px;
+                height: 512px;
+                pointer-events: none;
+                margin-top: -19px;
+            }
+            .drawing {
                 background-color: #fff;
                 width: 512px;
                 height: 512px;

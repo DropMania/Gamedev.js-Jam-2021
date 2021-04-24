@@ -4,11 +4,11 @@
         <div class="sub-title">ARE YOU TRUE MATES?</div>
         <div class="spacer1"></div>
         <img src="../assets/mirror_man/Sprite-0003.gif" />
-        <button @click="searchGames()">Search Games</button>
+        <Button @click="searchGames()">Search Games</Button>
         <div class="spacer1"></div>
-        <button @click="createGame('public')">Create Public Game</button>
+        <Button @click="createGame('public')">Create Public Game</Button>
         <div class="spacer1"></div>
-        <button @click="createGame('private')">Create Private Game</button>
+        <Button @click="createGame('private')">Create Private Game</Button>
         <div class="spacer1"></div>
         Enter via ID:<input
             type="text"
@@ -35,6 +35,7 @@ import { socket } from '../socket'
 import router from '../router'
 import PixelDrawer from './PixelDrawer.vue'
 import { onMounted, watch, ref } from 'vue'
+import Button from './util/Button.vue'
 let id = ref('')
 /* let drawer = ref(null)
 onMounted(() => {

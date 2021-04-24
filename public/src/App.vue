@@ -1,16 +1,24 @@
 <template>
+    <button @click="mute" class="muteButton">
+        <img src="/src/assets/img/muted.png" v-if="muted" />
+        <img src="/src/assets/img/loud.png" v-if="!muted" />
+    </button>
+    <!-- eslint-disable-next-line -->
     <router-view />
 </template>
 
-<script>
-/* const ostEl = document.createElement('audio')
-ostEl.src = '/src/assets/sounds/ost.mp3'
-
-ostEl.loop = true
-document.body.appendChild(ostEl)
+<script setup>
+import { startOST, muteOST, ostIsMuted } from './sounds'
+import { ref } from 'vue'
+let muted = ref(false)
 document.body.addEventListener('click', () => {
-    ostEl.play()
-}) */
+    startOST()
+})
+
+function mute() {
+    muted.value = !muted.value
+    muteOST()
+}
 
 if (localStorage.getItem('runningGames') == null) {
     localStorage.setItem('runningGames', '[]')
@@ -92,6 +100,14 @@ select {
     padding: 0.3rem;
     &::placeholder {
         color: #5d38bd;
+    }
+}
+.muteButton {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    img {
+        width: 40px;
     }
 }
 

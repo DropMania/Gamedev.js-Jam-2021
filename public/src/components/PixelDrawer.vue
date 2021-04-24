@@ -1,6 +1,7 @@
 <template>
     <div class="frame">
         <div class="cnvs" v-show="props.mine">
+            <img class="mirror_line" src="/src/assets/img/mirror_line.png" />
             <canvas id="game" width="32" height="32" ref="cnvs"> </canvas>
             <div class="colors">
                 <div
@@ -175,7 +176,14 @@ export default {
         width: 512px;
         height: 560px;
         border: solid black 16px;
-
+        /* background-image: url(../assets/img/mirror_line.png);
+        background-size: 100% 100%; */
+        .mirror_line {
+            position: absolute;
+            width: 512px;
+            height: 512px;
+            pointer-events: none;
+        }
         canvas {
             cursor: crosshair;
             background-image: repeating-linear-gradient(

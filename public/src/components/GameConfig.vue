@@ -67,10 +67,10 @@
         <textarea ref="linkURL" v-model="link" class="copytext"> </textarea>
         <textarea ref="IDURL" v-model="ID" class="copytext"> </textarea>
         <div class="config-item copys">
-            <button @click="copyLink()">Copy link!</button>
-            <button @click="copyID()">Copy ID!</button>
+            <Button @click="copyLink()">Copy link!</Button>
+            <Button @click="copyID()">Copy ID!</Button>
         </div>
-        <button
+        <Button
             v-if="stores.player.host"
             :disabled="stores.game.players.length < stores.game.minPlayers"
             @click="startGame()"
@@ -82,7 +82,7 @@
             "
         >
             Start!
-        </button>
+        </Button>
     </div>
 </template>
 
@@ -92,6 +92,7 @@ import { useRoute } from 'vue-router'
 import { onMounted, watch, ref } from 'vue'
 import router from '../router'
 import stores from '../stores'
+import Button from './util/Button.vue'
 const route = useRoute()
 const linkURL = ref('')
 const IDURL = ref('')

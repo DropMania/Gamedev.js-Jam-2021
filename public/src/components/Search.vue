@@ -2,7 +2,7 @@
     <div>
         All public Games:
         <div v-for="game in games" :key="game[0]">
-            <button @click="enter(game[0])">/{{ game[0] }}</button>
+            <Button @click="enter(game[0])">/{{ game[0] }}</Button>
         </div>
     </div>
 </template>
@@ -11,6 +11,7 @@
 import { socket } from '../socket'
 import { onMounted, watch, ref } from 'vue'
 import router from '../router'
+import Button from './util/Button.vue'
 let games = ref([])
 onMounted(() => {
     socket.emit('request_public_games', (publicGames) => {
