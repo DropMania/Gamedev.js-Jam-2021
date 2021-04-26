@@ -4,9 +4,10 @@ const httpServer = require('http').createServer(app)
 const socket = require('./socket')
 const path = require('path')
 const history = require('connect-history-api-fallback')
+const cors = require('cors')
 
 socket.init(httpServer)
-
+app.use(cors())
 const staticFileMiddleware = express.static(
     path.join(__dirname, '..', 'public', 'dist')
 )
