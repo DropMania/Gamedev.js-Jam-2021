@@ -1,5 +1,5 @@
 <template>
-    <button @click="playClick"><slot></slot></button>
+    <button><slot></slot></button>
 </template>
 
 <script setup>
