@@ -1,8 +1,8 @@
 <template>
-    <!--  <button @click="mute" class="muteButton">
+    <button @click="mute" class="muteButton">
         <img src="/src/assets/img/muted.png" v-if="muted" />
         <img src="/src/assets/img/loud.png" v-if="!muted" />
-    </button> -->
+    </button>
     <!-- eslint-disable-next-line -->
     <router-view />
 </template>
@@ -10,15 +10,15 @@
 <script setup>
 import { startOST, muteOST, ostIsMuted } from './sounds'
 import { ref } from 'vue'
-/* let muted = ref(false)
+let muted = ref(false)
 document.body.addEventListener('click', () => {
     startOST()
-}) */
-/* 
+})
+
 function mute() {
     muted.value = !muted.value
     muteOST()
-} */
+}
 
 if (localStorage.getItem('runningGames') == null) {
     localStorage.setItem('runningGames', '[]')
