@@ -2,6 +2,9 @@
 
 Gamedev.js Jam 2021 #gamedevjs
 
+The Jam is over.
+You can play the game [here](https://mirrormates.herokuapp.com)
+
 # Theme is: Mirror
 
 ## Brainstorming:
